@@ -4,3 +4,13 @@ services:
     build: .
     ports:
       - "8000:8000"
+    environment:
+      - APP_DEBUG=true
+      - APP_ENV=local
+      - APP_KEY=base64:kVwFJJJQ7eYLk1TivxlrWDuHyFbrPx5Ow3mn5PRPBUw=
+    command:
+      - sh
+      - -c
+      - "./artisan migrate && ./artisan serve --host=0"
+    volumes:
+      - ./database/:/app/database/
