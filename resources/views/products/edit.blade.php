@@ -43,7 +43,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label h5">Description</label>
-                  <textarea placeholder="Description" class="form-control" name="description" cols="30" rows="5">{{ old('description', $product->description) }}</textarea>
+                  <textarea placeholder="Description" class="form-control form-control-lg" name="description" cols="30" rows="5">{{ old('description', $product->description) }}</textarea>
                 </div>
                 <div class="d-grid">
                   <button class="btn btn-lg btn-primary">Submit</button>

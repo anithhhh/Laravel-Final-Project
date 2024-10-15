@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Category;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -16,24 +17,28 @@ class ProductController extends Controller
     }
 
     public function create() {
-        return view('products.create');
+        return view('products.create')->with(['categories' => Category::all()]);
     }
 
     public function store(Request $r) {
         $v = Validator::make($r->all(), [
+            'category' => 'required',
             'name' => 'required|min:3',
             'price' => 'required|numeric',
         ]);
 
         if ($v->fails()) {
-          return redirect(
-                    )->route('products.create')->withInput()->withErrors($v);
+            return redirect(
+                )->route('products.create')->withInput()->withErrors($v);
         }
-        $p= new Product();
+        $c = Category::findOrFail($r->category);
+        $p = new Product();
         $p->name = $r->name;
         $p->price = $r->price;
         $p->description = $r->description;
+        $p->category_id = $c->id;
         $p->save();
+        $c->save([$p]);
         return redirect()->route('products.index')->with('success', 'Product added successfully.');
     }
 
@@ -51,8 +56,8 @@ class ProductController extends Controller
         ]);
 
         if ($v->fails()) {
-          return redirect(
-                    )->route('products.edit', $p->id)->withInput()->withErrors($v);
+            return redirect(
+                )->route('products.edit', $p->id)->withInput()->withErrors($v);
         }
         $p->name = $r->name;
         $p->price = $r->price;
@@ -61,7 +66,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
-    public function destroy() {
+    public function destroy($id) {
         $p = Product::findOrFail($id);
 
         $p->delete();

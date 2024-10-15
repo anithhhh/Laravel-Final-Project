@@ -14,8 +14,8 @@
     <div class="container">
       <div class="row justify-content-center mt-4">
         <div class="col-md-10 d-flex justify-content-end">
-          <a href="{{ route('categories.index') }}" class="btn btn-dark">Category list</a>
-          <a href="{{ route('products.create') }}" class="btn btn-dark">Create</a>
+          <a href="{{ route('products.index') }}" class="btn btn-dark">Product list</a>
+          <a href="{{ route('categories.create') }}" class="btn btn-dark">Create</a>
         </div>
       </div>
       <div class="row d-flex justify-content-center">
@@ -29,25 +29,23 @@
         <div class="col-md-10">
           <div class="card borde-0 shadow-lg my-4">
             <div class="card-header bg-dark">
-              <h3 class="text-white">Products</h3>
+              <h3 class="text-white">Categories</h3>
             </div>
             <div class="card-body">
               <table class="table">
                 <tr>
                   <th>Name</th>
-                  <th>Price</th>
                   <th>Created at</th>
                   <th>Action</th>
                 </tr>
-                @foreach ($products as $p)
+                @foreach ($categories as $c)
                 <tr>
-                  <td>{{ $p->name }}</td>
-                  <td>${{ $p->price }}</td>
-                  <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d M Y') }}</td>
+                  <td>{{ $c->name }}</td>
+                  <td>{{ \Carbon\Carbon::parse($c->created_at)->format('d M Y') }}</td>
                   <td>
-                    <a href="{{ route('products.edit', $p->id) }}" class="btn btn-dark">Edit</a>
-                    <a href="#" onclick="deleteProduct({{ $p->id }}, '{{ $p->name }}');" class="btn btn-danger">Delete</a>
-                    <form id="delete-product-from-{{ $p->id }}" action="{{ route('products.destroy', $p->id) }}" method="post">
+                    <a href="{{ route('categories.edit', $c->id) }}" class="btn btn-dark">Edit</a>
+                    <a href="#" onclick="deleteCategory({{ $c->id }}, '{{ $c->name }}');" class="btn btn-danger">Delete</a>
+                    <form id="delete-category-from-{{ $c->id }}" action="{{ route('categories.destroy', $c->id) }}" method="post">
                       @csrf
                       @method('delete')
                     </form>
@@ -61,9 +59,9 @@
       </div>
     </div>
     <script>
-      function deleteProduct(id, name) {
-        if (confirm("Are you sure you want to delete product " + name + "?")) {
-          document.getElementById("delete-product-from-" + id).submit();
+      function deleteCategory(id, name) {
+        if (confirm("Are you sure you want to delete category " + name + "?")) {
+          document.getElementById("delete-category-from-" + id).submit();
         }
       }
     </script>
