@@ -28,7 +28,8 @@
               <div class="card-body">
                 <div class="mb-3">
                   <label for="" class="form-label h5">Category</label>
-                  <select name="category" class="form-control form-control-lg">
+                  <a href="{{ route('categories.create') }}" class="btn btn-dark">Create</a>
+                  <select name="category" class="@error('category') is-invalid @enderror form-control form-control-lg">
                     @foreach ($categories as $c)
                     <option value="{{ $c->id }}"
                     @if ($c == old('category'))
@@ -37,6 +38,9 @@
                     >{{ $c->name }}</option>
                     @endforeach
                   </select>
+                  @error('category')
+                  <p class="invalid-feedback">{{ $message }}</p>
+                  @enderror
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label h5">Name</label>
