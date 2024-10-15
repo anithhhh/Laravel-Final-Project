@@ -28,6 +28,22 @@
               @csrf
               <div class="card-body">
                 <div class="mb-3">
+                  <label for="" class="form-label h5">Category</label>
+                  <a href="{{ route('categories.create') }}" class="btn btn-dark">Create</a>
+                  <select name="category" class="@error('category') is-invalid @enderror form-control form-control-lg">
+                    @foreach ($categories as $c)
+                    <option value="{{ $c->id }}"
+                    @if ($c->id == old('category', $product->category->id))
+                    selected
+                    @endif
+                    >{{ $c->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('category')
+                  <p class="invalid-feedback">{{ $message }}</p>
+                  @enderror
+                </div>
+                <div class="mb-3">
                   <label for="" class="form-label h5">Name</label>
                   <input value="{{ old('name', $product->name) }}" type="text" class="@error('name') is-invalid @enderror form-control form-control-lg" placeholder="Name" name="name">
                   @error('name')

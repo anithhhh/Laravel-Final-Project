@@ -34,6 +34,7 @@
             <div class="card-body">
               <table class="table">
                 <tr>
+                  <th>Category</th>
                   <th>Name</th>
                   <th>Price</th>
                   <th>Created at</th>
@@ -41,6 +42,7 @@
                 </tr>
                 @foreach ($products as $p)
                 <tr>
+                  <td>{{ $p->category->name }}</td>
                   <td>{{ $p->name }}</td>
                   <td>${{ $p->price }}</td>
                   <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d M Y') }}</td>

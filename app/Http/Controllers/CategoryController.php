@@ -38,7 +38,7 @@ class CategoryController extends Controller
     public function edit($id) {
         $c = Category::findOrFail($id);
 
-        return view('categories.edit', ['category'=>$c]);
+        return view('categories.edit', ['category' => $c]);
     }
 
     public function update($id, Request $r) {
